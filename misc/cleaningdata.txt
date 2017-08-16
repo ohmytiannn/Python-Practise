@@ -1,0 +1,234 @@
+LOADING DATA and checking for erros
+import pandas as pd 
+df=pd.read_csv(csv_file)#load the file into a dataframe
+df.head() #to see the dataframe
+df.tail() #to read the end of the dataframe
+df.columns#To inspect the columns
+df.shape  #To see the number of rows and columns of data
+df.info()   #To get additional information about the data frame
+
+EXPLORATORY DATA ANALYSIS
+Procedure for performing frequency counts
+#using value_counts() method
+df.column_name.value_counts(dropna=False) #column_name is to be replaced with an actual column name
+df[column_name].value_counts(dropma=False) #can be written using square brackets
+df.column_name.value_counts(dropna=False).head() #can be used to reduce tha amount to check
+things to look out for
+   //extra data
+   //wrong data type
+   //missing data
+
+Summary statistics
+   numeric columns
+   outliers
+Procedure:
+   df.describe()
+   returns: count
+            mean
+            std
+            min
+            25%
+            50%
+            75%
+            max
+
+VISUALISING DATA IN ORDER TO SPOT OUTLIERS
+Bar plots for discrete
+from matplotlib import pyplot as plt 
+df.boxplot(column=column_name,by=column_name_to_compare)
+plt.show()
+example:
+df.boxplot(column='initial_cost', by='Borough', rot=90)
+
+Histograms for continous data
+from matplotlib import pyplot as plt
+df.column_name.plot('hist')#where column_name is the column name without ""
+plt.show()
+   IDENTIFYING ERROR
+   df[df.column_name>condition]
+example:
+df['Existing Zoning Sqft'].plot(kind='hist', rot=70, logx=True, logy=True)
+#kind to set the kind of graph
+#rot to rotate the axis labels by that amount of percent
+#logx and logy to ensure that the data formed is log-ed
+
+Scatterplot
+Used to see the relationship between 2 numeric columns
+spot errors that are not found by looking at 1 variable in box or Histogramsg
+
+example:(visualising with multiple scatterplots)
+df.plot(kind='scatter', x='initial_cost', y='total_est_fee', rot=70)
+#kind to indicate type of graphs
+# x and y values to indicate labels
+# rot to indicate rotation of the label
+
+TIDYING DATA
+
+Melting
+principals of tidying data
+   columns represent seperate variables
+   rows represent individual observations
+   Observational units from tables
+data problem we are trying to fix
+   columns containing values, instead of variables
+pd.melt(frame=df, id_vars='name', value_vars=["treatment a","treatment b"],var_name="",value_name="")
+pd.melt(frame=df, id_vars='name', id_vars=["treatment a","treatment b"],var_name="",value_name="")
+# specify the id_vars you do not wish to melt
+# Melring removes the columns away
+
+Pivoting
+turning columns into rows
+purpose: reshaping analysis friendly shape to reporting friendly shape
+
+Procedure
+df.pivot(index=[],column='',values='')
+#somethings you will get errors
+df.pivot_table(values=[],index='',columns=,'',aggfunc=function_to_be_used)
+
+#after pivoting, the index will be changed and thus there will be 
+airquality_pivot.index
+airquality_pivot.reset_index()
+
+MELTING and PARSING #to handle variables that might contain more than 1 data type
+#for instance, the data might contain both sex and age range
+pd.melt(frame=tb,id_vars['',''])
+pd.column.str[index].string_methods()
+#can use any string methods that are applicable for usage
+
+Combining data
+after rows are concatnated, they keep their original index
+Procedure
+   pd.concat([df1,df2],ignore_index=True,axis=1)#list of dataframes
+#second parameter is true so that initial indexes are not kept the same
+#axis=1 for row wise concat axis=0 for row wise concat
+
+Concatenating alot of files
+Globbing: pattern matching for file names
+
+Wildcards *?
+   *.csv#all csv files
+   file_?.csv #file_ then any single character .csv
+glob function will return a list of file names
+
+procedure:
+import glob
+csv_files=glob.glob("*.csv")#this will result in a list of all csv files
+print(csv_files)
+
+list_data=[]
+for filename in csv_files:
+   data=pd.read_csv(filename) 
+   list_data.append(data)
+   #this will result in a list of dataframes
+uber = pd.concat(list_data)#this is done for alot of files
+
+#How to combine data if lets say we merge two data frames where the order of
+#country is not in order
+MERGING data that are do not have matching order 
+Procedure:
+   pd.merge(left=left_dataframe,right=right_dataframe,on=,left_on=,right_on=)
+   left_dataframe must be a dataframe
+   right-dataframe must be a dataframe 
+   on=None, on=key_name #if there are matching column numbers, the column name cna be specififed
+   right_on/left_on #column names for merging should they store similar data types
+   #for example right_on can have a key called name that stores names
+   #for example left_on might have an aliases key that stores the same names
+    
+One to one merge
+#implies that all keys match
+many to one merge/one to many
+#if there are duplicates in key, the dataframe that is lacking in the key will duplicate
+many to many
+
+Checking Data types
+   df.dtype
+   #outputs the types of data inside the dataframe
+Converting Data types
+   #conversion to strings
+   df['treatment b']=df['treatment b'].astype(str)#in this case 'treatment b' is the column anme
+   #conversion to categorical data
+   df['treatment b']=df['treatment b'].astype('category')
+   categorical data
+   //makes dataframe smaller in memory
+   //can be utilised by other libraries for analysis
+
+   #coercing data to be coerced to become their data type
+   #lets say that is a dash, it will be coerced to become 0 if df type is integer
+   df['treatment b']=pd.to_numeric(df['treatment b'],errors='coerce')
+
+Using regular expressions to clean strings
+import re
+pattern=re.complie(regexp)#regexp is based on pattern u want to clean
+result=pattern.match("")#this is used to narrow to very specific values
+bool(result)
+re.findall(regexp,string)
+#string should be the string that you want to apply the expression on
+
+Functions to clean data 
+procedure:
+df.apply(function_name,arg)
+example:
+   df.apply(np.mean,axis=0)
+   #axis=0 column wise
+   #axis=1 row wise
+   #in this case, it will find the mean of values acrpss the column
+   //function
+   #the function used should not ahve more than 1 argument as it will pass through
+example:
+   import re
+   from numpy import NaN
+   pattern=re.compile(regexp)
+USING LAMBDA
+# Write the lambda function using replace
+tips['total_dollar_replace'] = tips.total_dollar.apply(lambda x: x.replace('$', ''))
+
+# Write the lambda function using regular expressions
+tips['total_dollar_re'] = tips.total_dollar.apply(lambda x: re.findall('\d+\.\d+', x)[0])
+
+Dealing with duplcate and missing data
+   
+Dropping duplicates
+procedure
+df=df.drop_duplicates()
+#duplicates are dropped
+
+Missing data 
+3 ways to deal with missing data
+   1. leave it as it is
+   2. Drop them
+   3. Fill missing data
+Procedure
+.info() method#used on dataframes to determine the amount of missing values
+.dropna() method #used in order to drop rows that have missing dataframes
+.fillna() method 
+#for one column
+df['column1'].fillna('empty')
+#for multiple columns
+df[['column1','column2']].fillna('empty')
+#for filling with a test statistic
+df['column1'].fillna(df['column1'].mean())
+
+TESTING
+writing assert statements to verify this
+assert 1==1 # no erro
+assert 1==2 # returns error when false
+assert df.notnull().all() #this is used to check if there are missing data 
+#inside the function. if there is missing data, there will be an error function
+examples
+# Assert that there are no missing values
+assert pd.notnull(ebola).all().all()
+
+# Assert that all values are >= 0
+assert (ebola>=0).all().all()
+
+
+
+Application
+
+1. import pandas
+2. read csv
+3. .head() and .info methods to dataframes see more
+4. .columns to get column data #with .column.plot('hist')
+5. .describe() and .column.value_counts() #use it as a way to screen for outliers
+6. apply() # use to apply functions
+7. assert to check

@@ -1,0 +1,153 @@
+IMPORTING DATA
+
+PLAIN TEXT FILES
+   Text FILES
+      1.using funciton Open() to open the files
+      2.use the read() method on the FILES
+      3.close the file with close() method 
+
+   Using with statement in the way shown in the example below will allow us to not need to close the file
+   with open('output.txt', 'w') as f:
+    f.write('Hi there!')
+
+miscelleanous methods
+   .readline() #to read the nextline
+
+Flat files are basic text files that contain records
+   .csv comma seperate file
+   .txt 
+      tab delimiter
+
+NUMPY NUMPY
+Numpy is the python standard for storing numerical DATA
+USSFUL NUMPY functions for importing data
+   loadtxt()
+   genfromtxt()
+
+Customising your Numpy import 
+   1. import numpy package as np
+   2a. using np.loadtxt(filename,delimiter="delimiter-value",skiprows='rows_to_skip',dtype='type', usecols=array_of_columns_to_use)
+      delimiter use be ',' for csv and '\t' for tab delimited
+      dtype can be string, float, integer,etc
+      !! does not really do well with mixed data
+   2b. using np.genfromtxt() which can handle mulitple datatypes
+   Example: data = np.genfromtxt('titanic.csv', delimiter=',', names=True, dtype=None)
+      in this case if dtype=none, it will decide what type of data type to use
+      can read files that contain mulitple data types
+   2c. using np.recfromcsv()
+      default data type is none
+      default delimiter of ','
+      default names=True
+
+PANDAS PANDAS
+data = pd.read_csv(file, sep=____, comment=____, na_values=____)
+   sep is the pandas equivalent of delimiter 
+   comment is to take in comments after they appear after a particular symbol
+   na_values is a list of strings that they recognise as NaN
+
+Importing other type of data files
+   Excel spreadsheets
+   MATLAB files
+   SAS files
+   Stata files
+   HSF5 files 
+
+In order for the files to be processed in python, the files will be needed to be pickeled first
+   import pickle 
+   with open(filename,'rb') as file
+   #rb is for read only and  binary
+      data=pickle.load(file)
+
+Excel
+      excelfile=pd.ExcelFile(file)
+      excelfile.sheet_names #used to get a list of sheet names
+      df1=x1.parse('sheet_name',skiprows=array_of_index_to_skip,names=array_of_names_to_replace,parse_cols=array_to_index_to_parse)#used to load a sheet into a dataframe
+      df1=x1.parse(index) #where index is an integer of its position
+
+SAS and stata     
+
+from sas7bdat import SAS7BDAT
+with sas7bdat('urban_pop.sas7bdat') as file
+      df_sas=file.to_data_frame()
+
+import pandas as pd
+data=pd.read_stat(filename) #produces a dataframe
+
+HDF5 files
+hierarichal data format version 5
+
+import h5py 
+data=h5py.file(filename,'r')# r meant to show that the file is read only
+#to find out the keys insid hdg5
+for key in data.keys()
+      print(key)
+
+MATLAB files
+
+import scipy.io 
+mat=scipy.io.loadmat(filename)
+usings .keys() method to get keys
+#prints out dictionary
+#keys belong to type, value belongs to value
+
+introductional to relational database
+each row is an order
+each column is an attribute
+
+CREATING A DATABASE ENGINE
+from sqlalchemy import create_engine
+engine=create_engine('')
+            engine=create_engine('sqlite:///Chinook.sqlite')
+engine.table_names()# to get an array of table names
+
+//querying database using python
+after creating engine, 
+con=engine.connect()
+rs=con.execute(sql_command)
+df=pd.DataFrame(rs.fetchall()) 
+///or use fetchmany()
+df=pd.DataFrame(rs.fetchmany(size=3))
+#setting the column names
+df.columns=rs.keys()
+
+Basic sql commands to use
+#select all
+      SELECT * FROM table_name
+#selecting some columns
+      SELECT column_name1, column_name2 FROM table_name
+#selecting all if(where) condition is met      
+      SELECT * FROM table_name WHERE Country = 'Canada'
+#Selecting all and sorting them according to Birthdate
+      SELECT * FROM Employee ORDER BY Birthdate
+#select all
+      SELECT * FROM table_name INNER JOIN table_name_2 on table_name.Column_to_merge_at=table_name_2.Column_to_merge_at     
+
+Method 1
+engine=create_engine("")
+con=engine.connect()
+rs=con.execute(sql_command)
+df=pd.DataFrame()
+df.columns=rs.keys()
+con.close()
+
+Method 2
+engine=create_engine("")
+with engine.connect() as con:
+      rs=con.execute(sql_command)
+      df=pd.DataFrame()
+      df.columns=rs.keys()
+
+Method 3
+engine=create_engine("")
+pd.read_sql_query(sql_command,engine)
+
+
+
+	
+		
+			
+				
+					 
+						
+							
+								

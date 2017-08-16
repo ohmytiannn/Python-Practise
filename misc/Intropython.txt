@@ -1,0 +1,91 @@
+#Python guide
+
+Basic operators
+#  addition       +
+#  subtraction    -
+#  Mulitply       *
+#  Divide         /
+#  exponentiation **
+#  Modulo         %
+
+Variables
+# In order to declare variables we just need to type in the varaible name
+
+Types
+#in order to test the types of data, we use 
+type()
+#types of variables
+#  strings
+#  booleans
+#.....float,int
+
+Converting Types
+str() #used to convert a value into a string
+bool() #empty bool returns false, valid value returns true
+int() # used to round down dloats to the nearest integer
+float() # used to convert strings or integers into floats 
+
+Python list
+[]
+#list can contain many types of variables
+#in order to call the values in the list, we will use the position, 
+#similar to an array in javascript
+#however, if using -1, it means first value from the back
+Manipulating list
+# x[1:4] to get the 2nd to 4th element 
+# x[-4:-2] to get 4th last to 3rd last
+# x[:2] to get first to second value
+# x[2:] to get the 2nd value onwards to the last
+# x[:] to get the whole list (explicit such that change in new list does not affect original)
+
+#adding 
+# array + array
+#replacing
+# array[position]=new value
+#Delete
+del()
+
+common Functions
+len()
+round()
+max()
+min()
+sorted([],reverse=true/false)
+
+
+#list Method
+#.index() position
+#.count() number of stated variable
+#.capitalize() captialise the first value
+#.replace(,)
+#.upper() to capitalise everything
+
+Method
+#depending on type of object, there are different methods
+
+importing
+import math                                          use math.pi
+from math import pi (sekective impoort)              use pi
+from math import pi as placeholder                   use placeholder
+
+#NUMPY
+
+#  ARRAYS
+#     numpy.array()
+#     numpy arrays can be multiplied throughout 
+#        for instance, np.array()*5
+#     numpy arrays can also be tested against conditionals
+#        for instance,
+          light=bmi<21 # returns an array with true or false whether its below 21
+          bmi[light] #returns onlu the bmi that is less than 21
+      
+#     2 dimensional arrays
+#        np.array([],[])
+#        np.array([],[])[row selector][column selector] or
+#        np.array([],[])[row selector, column selector]
+#     array_name.shape in order to get the shape of the array
+#Numpu Methods     
+   .mean(arg1) 
+   .median(arg1)
+   .corrcoef(arg1,arg2) #correlation
+   .random.normal(mean,SD,numberofsample)

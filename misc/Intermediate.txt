@@ -1,0 +1,300 @@
+
+
+
+Matplotlib(basic plotting of graphs)
+   import matplotlib 
+   
+   from matplotlib import pyplot as plt
+   import numpy as np
+   
+   
+   plt.plt(x,y); #for a normal line plt
+   plt.scatter(x,y,s=size,c=color,alpha=opacity); #for a normal scatter plt
+      size # must contain a numpy array that contains the same number of arguments as x and y
+      color # must contain a dictionary with the same number of arguments as x and y
+      alpha # must contain a number(integer or float) that ranges from 0-1
+   plt.hist(values_array,bins=3); #in order to plt a histogram that has three columns
+      #if the number of bins are not stated, python will automatically generate for you
+      
+   plt.xlabel('');# 
+   plt.ylabel('');#
+   plt.title(''); #
+   plt.yticks(
+      [1,2,3],
+      ["1B","2B","2b"] #second array must be same length as first. this is used to change the name of the labels
+      ) # in order to set the values on the y axis
+   plt.xscale('log'); # in order to change the x axis to become log
+   plt.grid(True) # Add grid() call
+
+   plt.show(); #for showing that a a plot exist
+   plt.clf(); # in order to clear the plot                     
+
+Dictionaries {}
+#dictionaries are like javascript objects
+example dictionary
+europe={
+    'spain':'madrid'
+    'france':'paris'
+    'germany':'berlin'
+    'norway':'orlo'
+};
+#very similar to a javascript object exceot that the kkeys are strings
+
+methods for dictionaries
+#dictionary.key() in order to abstract the keys that can be found in the dictionaries
+'france' in europe # can be used to check if the key exist. Boolean will be returned.
+del europe['austrailia'] # can be used in order to delete a key.
+
+Pandas
+#numpy array can only contain one type of data type
+#pandas can show more complex arrays
+import pandas as pd 
+1. Create a dictionary with key-value pairs
+2. pd.DataFrame(dict) # to create a dataframe from the dict
+
+DataFrames
+    Methods
+    .index=row_labels# to set the row labels
+    # row_labels must contain the same number of arguments and the other variables
+
+CSV to DataFrames
+    pd.read_csv(name_of_csv,index_col=number) # use this to import the csv file
+    #csv file must be a string
+    #index_col is used to specify which row in the csv to be used as row labels
+    #if 0 is used, that means that the first row is used to show the row labels
+
+can use .head() to get 
+[]
+column access 
+    brics[['string1','string2']] #Pandas dataframe
+    brics['string1','string2'] #Pandas series
+row access 
+    brics[1:4]# in this case it refers to 2nd to 4th indexed value
+    # make us of integers
+Loc
+row access 
+    brics.loc[['RV','IN','CH']]
+column  access
+    brics.loc[:,['string1','string2']]
+row and column access
+    brics.loc[['',''],['','','']]
+    #first array contains row labels that are strings
+    #second array contains column labels that are strings
+value access 
+    brics.loc[row,column]
+        where both row and column inputs are strings
+iloc
+row access
+    brics.iloc[[1,2],[1,2,3]]
+    #first aaray should contain the integers
+    #second array shoul contain the integers that are used for columns
+
+Equalities
+==
+!=
+>=
+<=
+
+Numpy arrays(can be used for numpy arrays)
+#When used, will return an array of True and False elements
+
+Boolean operators
+    and
+    or 
+    not
+#NB: Notice that not has a higher priority than and and or, it is executed first.
+
+for Numpy arrays
+    np.logical_and(), np.logical_or()  np.logical_not(). 
+
+if statement
+    if () :
+        #//;
+    elif () :
+        #//;
+    else :
+        #//;
+
+Filtering Pandas dataframe
+# Import cars data
+import pandas as pd
+cars = pd.read_csv('cars.csv', index_col = 0)
+
+# Extract drives_right column as Series: dr
+dr=cars['drives_right']
+# Use dr to subset cars: sel
+sel=(cars[dr])
+
+# Print sel
+print(sel)
+
+# Import cars data
+import pandas as pd
+cars = pd.read_csv('cars.csv', index_col = 0)
+
+# Create car_maniac: observations that have a cars_per_cap over 500
+cpc=cars['cars_per_cap']
+many_cars=(cpc>500)
+car_maniac=cars[many_cars]
+# Print car_maniac
+print(car_maniac)
+
+
+ITERATIONS
+
+while loops
+while condition:
+    #argument
+
+if else 
+if condition:
+    #
+else condition:
+    #
+
+for loops
+
+for height in fam:
+    print(height)
+
+fam = [1.73, 1.68, 1.71, 1.89]
+for index, height in enumerate(fam) :
+    print("index " + str(index) + ": " + str(height))
+
+for x in (house):
+    print("the "+str(x[0])+' is '+str(x[1])+" sqm")
+LOOPING OVER DICTIONARY
+# Definition of dictionary
+europe = {'spain':'madrid', 'france':'paris', 'germany':'bonn', 
+          'norway':'oslo', 'italy':'rome', 'poland':'warsaw', 'australia':'vienna' }
+          
+# Iterate over europe
+for key,value in europe.items():
+    print("the capital of "+key+ " is "+value)
+LLOPING OVER NUMPY ARRAY
+# Import numpy as np
+import numpy as np
+
+# For loop over np_height
+for x in np_height :
+    print(str(x)+" inches")
+# For loop over np_baseball
+for x in np.nditer(np_baseball) :
+    print(x)
+LOOPING OVER DATA FRAMES
+# Import cars data
+import pandas as pd
+cars = pd.read_csv('cars.csv', index_col = 0)
+
+# Iterate over rows of cars
+for lab, row in cars.iterrows() :
+    print(lab)
+    print(row)  
+# Import cars data
+import pandas as pd
+cars = pd.read_csv('cars.csv', index_col = 0)
+
+# Adapt for loop
+for lab, row in cars.iterrows() :
+    print(lab+': '+str(row['cars_per_cap']))
+
+ASSIGN COLUMN 
+# Import cars data
+import pandas as pd
+cars = pd.read_csv('cars.csv', index_col = 0)
+
+# Code for loop that adds COUNTRY column
+print(cars)
+for lab, row in cars.iterrows() :
+   cars.loc[lab, "COUNTRY"] = row["country"].upper()
+
+# Print cars
+print(cars)
+CASE @
+
+# Import cars data
+import pandas as pd
+cars = pd.read_csv('cars.csv', index_col = 0)
+
+# Use .apply(str.upper)
+cars["COUNTRY"] = cars["country"].apply(str.upper)
+
+RANDOM GENERATION
+The numbers generated are psuedo random and are affected by the value of the seed
+# Import numpy as np
+import numpy as np
+# Set the seed
+np.random.seed(123)
+# Generate and print random float
+print(np.random.rand())
+DICE RAND INT
+# Import numpy and set seed
+import numpy as np
+np.random.seed(123)
+
+# Use randint() to simulate a dice
+
+print(np.random.randint(1,7))
+# Use randint() again
+
+print(np.random.randint(1,7))
+
+DICE trial
+# Import numpy and set seed
+import numpy as np
+np.random.seed(123)
+
+# Starting step
+step = 50
+
+# Roll the dice
+dice=np.random.randint(1,7)
+
+# Finish the control construct
+if dice <= 2 :
+    step = step - 1
+elif dice <=5 :
+    step = step + 1
+else :
+    step = step + np.random.randint(1,7)
+
+    
+# Print out dice and step
+print(dice)
+print(step)
+
+VISUALISATION
+import matplotlib.pyplot as plt
+import numpy as np
+np.random.seed(123)
+all_walks = []
+for i in range(10) :
+    random_walk = [0]
+    for x in range(100) :
+        step = random_walk[-1]
+        dice = np.random.randint(1,7)
+        if dice <= 2:
+            step = max(0, step - 1)
+        elif dice <= 5:
+            step = step + 1
+        else:
+            step = step + np.random.randint(1,7)
+        random_walk.append(step)
+    all_walks.append(random_walk)
+
+# Convert all_walks to Numpy array: np_aw
+np_aw=np.array(all_walks)
+
+# Plot np_aw and show
+plt.plot(np_aw)
+plt.show()
+
+# Clear the figure
+plt.clf()
+
+# Transpose np_aw: np_aw_t
+np_aw_t=np.transpose(np_aw)
+
+# Plot np_aw_t and show
+plt.plot(np_aw_t)
+plt.show()

@@ -1,0 +1,77 @@
+IMPORTING FLAT FILES
+from urllib.request import urlretrieve
+#use this function to save as a local csv
+csv=urlretrieve(url,file_name_to_be_saved_as)
+df=pd.read_csv(csv,sep=';')
+#or use pandas to read url directly
+df=pd.read_csv(url,sep=';')#sep means what seperates the data  
+
+IMPORTING NON FLAT FILES
+ eXCEL
+xl=pd.read_excel(url,sheetname=None)
+#none to omport all sheets
+
+HTTP GET
+using URLLIB
+from urllib.request import urlopen, Request
+request=Request(url)
+response=urlopen(request)
+html=response.read()
+response.close()
+
+using Request
+import request
+r=request.get(url)
+text=r.text
+
+SCRAPPING DATA USING beautiful soup
+from bs4 import BeautifulSoup
+import requests
+r=requests.get(url)
+html_doc=r.text
+soup=BeautifulSoup(html_doc)
+   soup.title
+   soup.get_text()
+   soup.find_all(string_to_search)# in order to find certain tags
+   soup.prettify()
+a-tags=soup.find_all('a')
+# Print the URLs to the shell
+for link in a_tags:
+    print(link.get('href'))
+
+JSON AND APIS
+
+LOADING JSON and APIS
+JSON
+import json 
+with open(json_link,'r') as json_file
+   json_data=json.load(json_file)
+# to print out the key and value pairs
+for k in json_data.keys():
+    print(k + ': ', json_data[k])
+
+APIS
+set of protocols and routines for interaction between programmes
+bunch of code that allow 2 programmes to talk
+
+import request
+r=request.get(url)#api link
+json_data=r.json()
+for key, value in json_data.items()
+   print(key +':' +value)
+
+Twitter API
+import tweepy, json
+access_token=""
+access_token_secret=""  
+consumer_key=""
+consumer_secret=""
+auth=tweepy.OAuthHandler(consumer_key,consumer_secret)
+auth.set_access_token(access_token,access_token_secret)
+???
+# Initialize Stream listener
+l = MyStreamListener()
+# Create you Stream object with authentication
+stream = tweepy.Stream(auth,l)
+# Filter Twitter Streams to capture data by the keywords:
+stream.filter(track=['clinton','trump','sanders','cruz'])

@@ -1,0 +1,72 @@
+Writing functions
+
+tuple 
+()
+tuples are like a list in the sense that they contain value
+they are immutable in the sense that their values are protected and cannot be changed
+Tuple values can be assigned keys to allow them to be called
+   tuples-(1,2,3)
+   a,b,c=tuples
+   print(a)=1
+
+SCOPE of functions
+Global
+   use keyword global in function to call global variable and change it using the function
+local 
+built in
+   import builtins
+   dir(builtins)
+nolocal keyword
+
+priority (scope searches)
+local
+enclosing
+global
+built in
+
+functions with DEFAULT ARGUMENT
+   def function_name(inputvalue,defaultinput=1)
+   #this means that the input value of the second value is 1 if not stated
+
+FLEXIBLE ARGUMENTS
+CASE1
+   def function_name1(*flexible_input)
+   #this allows for multiple arguments to be keyed in
+   #arguments keyed in will be turned into arrays
+CASE2
+   def function_name2(**flexible_input2)
+   ##need to key in values as key value pairs 
+   #key does not need to be a string
+TO ITERATE INSIDE THE FLEXIBLE ARGUMENTS
+   CASE1
+   iterate through like an array 
+    for word in flexible_input:
+        hodgepodge += word
+   CASE2
+   iterate through it like a dictionary
+   for key, value in flexible_input2.items():
+        # Print out the keys and values, separated by a colon ':'
+        print(key + ": " + value)
+
+
+
+LAMBDA FUNCTIONS
+lambda variable1, variable2: variable1**variable2
+state variables then write what you want them to do
+ANONYMOUS FUNCTIONS USED IN LAMBDA FUNCITONS
+map(function,sequence)
+can be quicly placed in map function to affect sequence
+CAN BE USED TO FILTER
+result= filter(lambda member: len(member)>6, fellowship)
+returns values that are above the value 6 for this case
+REDUCE
+from functools import reduce
+???
+
+ERROR HANDLING
+   TRY AND EXCEPT
+   try:
+   except:
+   RAISE
+   can be used in condtional
+   raise ValueError("error messae")

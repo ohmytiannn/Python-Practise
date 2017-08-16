@@ -1,0 +1,176 @@
+ITERABLES
+adding an iter() function to iterables creates an iterator
+ITERATOR
+using the next() function, we will call the next value in the iterator
+
+example
+# Create a list of strings: flash
+flash = ['jay garrick', 'barry allen', 'wally west', 'bart allen']
+superspeed=iter(flash)
+print(next(superspeed))
+
+enumerate()
+takes a list and generates a enumerate object of index and values
+list() can be used to turn these objects into lsit of tuples
+when u print out the list form, you will get index and value for each tuple.
+This can be looped through 
+for undex, value in enumerate(list,start=staringnumber):
+   print (index,value)
+
+zip()
+takess multiple lists and returns a zip object which is an iterator of tuples
+turning it into a list allows it to be able to be printed out 
+when u print out the list the it will contain tuples with values from each list
+this cna be looped through
+for list_one_value, list_two_value in list:
+   print(list_one_value,list_two_value)
+print(*z) to print all at once
+
+example
+# Create a zip object from mutants and powers: z1
+z1 = zip(mutants,powers)
+# Print the tuples in z1 by unpacking with *
+print(*z1)
+# Re-create a zip object from mutants and powers: z1
+z1 = zip(mutants,powers)
+# 'Unzip' the tuples in z1 by unpacking with * and zip(): result1, result2
+result1, result2 = zip(*z1)
+# Check if unpacked tuples are equivalent to original tuples
+print(result1 == mutants)
+print(result2 == powers)
+
+zips can also be made into a dicitonary by enclosing the resulting zip object in dict()
+USING ITERATORS FOR BIG DATA
+import pandas as pd 
+result=[]
+for chunk in pd.read.csv('data.csv',chunksize=1000)
+   result.append(sum(chunk['x'])
+#can iterate based on chunks
+import pandas as pd 
+total=0
+for chunk in pd.read.csv('data.csv',chunksize=1000)#produces an iterable object
+   total += sum(chunk['X'])
+#can iterate based on chunks
+
+example 
+# Initialize an empty dictionary: counts_dict
+counts_dict={}
+
+# Iterate over the file chunk by chunk
+for chunk in pd.read_csv('tweets.csv',chunksize=10):
+
+    # Iterate over the column in DataFrame
+    for entry in chunk['lang']:
+        if entry in counts_dict.keys():
+            counts_dict[entry] += 1
+        else:
+            counts_dict[entry] = 1
+
+# Print the populated dictionary
+print(counts_dict)
+
+
+LIST COMPREHENSION
+new_nums=[action for value in array]
+example 
+   new_nums=[value+1 for value in array]
+equivalent
+   for value in array:
+      new_nums.append(value+1)
+
+Can also be used for nested loops NESTED LOOPS
+for num1 in range(0,2):
+   for num2 in range(6,8):
+      pairs_1.append(num1,num2)
+
+pairs_2=[(num1,num2) for num1 in range(0,2) for num2 in range(6,8)]
+!!!trafeoff of readability
+
+to create a 2d matrix 
+matrix = [[col for col in range(0,5)]  for row in range(0,5)]
+
+CONDITIONALS IN COMPREHENSIONS
+
+[action for iterable in list conditinoal]
+[ output expression for iterator variable in iterable if predicate expression ]
+
+[action conditinoal for iterable in list]
+
+SELECTIVE LIST COMPREHENSION
+
+[name[1:10] for name in list]
+can select elements from index 1 to 10
+
+tweet_clock_time = [entry[11:19] for entry in tweet_time if entry[17:19] == '19']
+
+
+DICTIONARIES IN COMPREHENSION
+use {} instead of []
+{key: value for iterable in list}
+
+GENERATORS
+a generator is just like a list comprehension except that it deos not store it in memory
+example is like range(5)
+since it is an iterable it can be made into a list, thus next can be used after that
+
+instead of using [] in list comprehensions,replace them wiht () and you will get 
+   good in the sense that you dont store the values
+
+GENERATORS VS LIST COMPREHENSIONS
+all the conditonals that can be applied to list comprehensions can also be applied to GENERATORS
+in other words, generators are like static list
+
+BUIDLING A GENERATOR FUNCTINO
+yield keyword
+generates a value that is not saved.(see example)
+
+example
+# Define generator function get_lengths
+def get_lengths(input_list):
+    """Generator function that yields the
+    length of the strings in input_list."""
+
+    # Yield the length of a string
+    for person in input_list:
+        yield len(person)
+
+
+# Define plot_pop()
+def plot_pop(filename, country_code):
+
+    # Initialize reader object: urb_pop_reader
+    urb_pop_reader = pd.read_csv(filename, chunksize=1000)
+
+    # Initialize empty DataFrame: data
+    data = pd.DataFrame()
+    
+    # Iterate over each DataFrame chunk
+    for df_urb_pop in urb_pop_reader:
+        # Check out specific country: df_pop_ceb
+        df_pop_ceb = df_urb_pop[df_urb_pop['CountryCode'] == country_code]
+
+        # Zip DataFrame columns of interest: pops
+        pops = zip(df_pop_ceb['Total Population'],
+                    df_pop_ceb['Urban population (% of total)'])
+
+        # Turn zip object into list: pops_list
+        pops_list = list(pops)
+
+        # Use list comprehension to create new DataFrame column 'Total Urban Population'
+        df_pop_ceb['Total Urban Population'] = [int(tup[0] * tup[1]) for tup in pops_list]
+    
+        # Append DataFrame chunk to data: data
+        data = data.append(df_pop_ceb)
+
+    # Plot urban population data
+    data.plot(kind='scatter', x='Year', y='Total Urban Population')
+    plt.show()
+
+# Set the filename: fn
+fn = 'ind_pop_data.csv'
+
+# Call plot_pop for country code 'CEB'
+plot_pop('CEB')
+
+# Call plot_pop for country code 'ARB'
+plot_pop('ARB')
